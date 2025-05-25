@@ -1,0 +1,277 @@
+{
+    "organization": {
+        "name": "株式会社サンプル",
+        "departments": [
+            {
+                "id": "dept-001",
+                "name": "経営企画部",
+                "level": 1,
+                "roles": [
+                    {
+                        "id": "role-001",
+                        "title": "部長",
+                        "responsibilities": [
+                            "経営戦略",
+                            "予算管理",
+                            "組織全体の方針決定"
+                        ],
+                        "reportTo": null
+                    },
+                    {
+                        "id": "role-002",
+                        "title": "課長",
+                        "responsibilities": [
+                            "部門戦略",
+                            "プロジェクト管理"
+                        ],
+                        "reportTo": "role-001"
+                    }
+                ]
+            },
+            {
+                "id": "dept-002",
+                "name": "営業部",
+                "level": 1,
+                "roles": [
+                    {
+                        "id": "role-003",
+                        "title": "営業部長",
+                        "responsibilities": [
+                            "営業戦略",
+                            "売上管理",
+                            "顧客関係"
+                        ],
+                        "reportTo": "role-001"
+                    },
+                    {
+                        "id": "role-004",
+                        "title": "営業課長",
+                        "responsibilities": [
+                            "チーム管理",
+                            "顧客対応"
+                        ],
+                        "reportTo": "role-003"
+                    },
+                    {
+                        "id": "role-005",
+                        "title": "営業担当",
+                        "responsibilities": [
+                            "顧客訪問",
+                            "提案書作成",
+                            "契約処理"
+                        ],
+                        "reportTo": "role-004"
+                    }
+                ]
+            },
+            {
+                "id": "dept-003",
+                "name": "開発部",
+                "level": 1,
+                "roles": [
+                    {
+                        "id": "role-006",
+                        "title": "開発部長",
+                        "responsibilities": [
+                            "技術戦略",
+                            "プロダクト管理",
+                            "技術選定"
+                        ],
+                        "reportTo": "role-001"
+                    },
+                    {
+                        "id": "role-007",
+                        "title": "開発マネージャー",
+                        "responsibilities": [
+                            "プロジェクト管理",
+                            "チームビルディング",
+                            "品質管理"
+                        ],
+                        "reportTo": "role-006"
+                    },
+                    {
+                        "id": "role-008",
+                        "title": "シニアエンジニア",
+                        "responsibilities": [
+                            "設計",
+                            "実装",
+                            "コードレビュー",
+                            "技術指導"
+                        ],
+                        "reportTo": "role-007"
+                    },
+                    {
+                        "id": "role-009",
+                        "title": "エンジニア",
+                        "responsibilities": [
+                            "実装",
+                            "テスト",
+                            "ドキュメント作成"
+                        ],
+                        "reportTo": "role-008"
+                    }
+                ]
+            },
+            {
+                "id": "dept-004",
+                "name": "人事部",
+                "level": 1,
+                "roles": [
+                    {
+                        "id": "role-010",
+                        "title": "人事部長",
+                        "responsibilities": [
+                            "人事戦略",
+                            "労務管理",
+                            "採用方針"
+                        ],
+                        "reportTo": "role-001"
+                    },
+                    {
+                        "id": "role-011",
+                        "title": "人事担当",
+                        "responsibilities": [
+                            "採用",
+                            "研修",
+                            "評価制度",
+                            "労務手続き"
+                        ],
+                        "reportTo": "role-010"
+                    }
+                ]
+            },
+            {
+                "id": "dept-005",
+                "name": "総務部",
+                "level": 1,
+                "roles": [
+                    {
+                        "id": "role-012",
+                        "title": "総務部長",
+                        "responsibilities": [
+                            "総務全般",
+                            "施設管理",
+                            "契約管理"
+                        ],
+                        "reportTo": "role-001"
+                    },
+                    {
+                        "id": "role-013",
+                        "title": "総務担当",
+                        "responsibilities": [
+                            "備品管理",
+                            "施設予約",
+                            "各種手続き"
+                        ],
+                        "reportTo": "role-012"
+                    }
+                ]
+            }
+        ]
+    },
+    "reportingRules": [
+        {
+            "category": "技術的な問題",
+            "keywords": [
+                "エラー",
+                "バグ",
+                "システム障害",
+                "不具合"
+            ],
+            "suggestedDepartments": [
+                "dept-003"
+            ],
+            "urgencyLevel": "high",
+            "escalationPath": [
+                "role-009",
+                "role-008",
+                "role-007",
+                "role-006"
+            ]
+        },
+        {
+            "category": "顧客関連",
+            "keywords": [
+                "顧客",
+                "クレーム",
+                "契約",
+                "商談"
+            ],
+            "suggestedDepartments": [
+                "dept-002"
+            ],
+            "urgencyLevel": "high",
+            "escalationPath": [
+                "role-005",
+                "role-004",
+                "role-003"
+            ]
+        },
+        {
+            "category": "人事関連",
+            "keywords": [
+                "採用",
+                "退職",
+                "評価",
+                "給与",
+                "休暇"
+            ],
+            "suggestedDepartments": [
+                "dept-004"
+            ],
+            "urgencyLevel": "medium",
+            "escalationPath": [
+                "role-011",
+                "role-010"
+            ]
+        },
+        {
+            "category": "経営・戦略",
+            "keywords": [
+                "経営",
+                "戦略",
+                "予算",
+                "方針"
+            ],
+            "suggestedDepartments": [
+                "dept-001"
+            ],
+            "urgencyLevel": "medium",
+            "escalationPath": [
+                "role-002",
+                "role-001"
+            ]
+        },
+        {
+            "category": "総務・施設",
+            "keywords": [
+                "備品",
+                "施設",
+                "オフィス",
+                "契約書"
+            ],
+            "suggestedDepartments": [
+                "dept-005"
+            ],
+            "urgencyLevel": "low",
+            "escalationPath": [
+                "role-013",
+                "role-012"
+            ]
+        }
+    ],
+    "communicationTemplates": [
+        {
+            "situation": "技術的な問題の報告",
+            "template": "【発生した問題】\n{問題の概要}\n\n【影響範囲】\n{影響を受けるシステム/ユーザー}\n\n【緊急度】\n{高/中/低}\n\n【試した対処法】\n{実施した内容}\n\n【必要なサポート】\n{求める支援内容}"
+        },
+        {
+            "situation": "顧客からのクレーム報告",
+            "template": "【顧客情報】\n会社名: {顧客名}\n担当者: {担当者名}\n\n【クレーム内容】\n{詳細}\n\n【発生日時】\n{日時}\n\n【現在の対応状況】\n{対応内容}\n\n【必要な対応】\n{提案する対応}"
+        },
+        {
+            "situation": "業務改善の提案",
+            "template": "【提案概要】\n{提案のタイトル}\n\n【現状の課題】\n{問題点}\n\n【改善案】\n{具体的な改善方法}\n\n【期待される効果】\n{メリット}\n\n【必要なリソース】\n{人員/予算/時間}"
+        }
+    ]
+}

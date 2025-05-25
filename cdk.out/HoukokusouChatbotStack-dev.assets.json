@@ -1,0 +1,21 @@
+{
+  "version": "41.0.0",
+  "files": {
+    "6425dc40636b253fe5f07a2b1e3c178254065f99a87ac2a231318718b38b699d": {
+      "displayName": "HoukokusouChatbotStack-dev Template",
+      "source": {
+        "path": "HoukokusouChatbotStack-dev.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "373901294410-ap-northeast-1": {
+          "bucketName": "cdk-hnb659fds-assets-373901294410-ap-northeast-1",
+          "objectKey": "6425dc40636b253fe5f07a2b1e3c178254065f99a87ac2a231318718b38b699d.json",
+          "region": "ap-northeast-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::373901294410:role/cdk-hnb659fds-file-publishing-role-373901294410-ap-northeast-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

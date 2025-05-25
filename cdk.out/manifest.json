@@ -1,0 +1,90 @@
+{
+  "version": "41.0.0",
+  "artifacts": {
+    "HoukokusouChatbotStack-dev.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "HoukokusouChatbotStack-dev.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "HoukokusouChatbotStack-dev": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://373901294410/ap-northeast-1",
+      "properties": {
+        "templateFile": "HoukokusouChatbotStack-dev.template.json",
+        "terminationProtection": false,
+        "tags": {
+          "Environment": "dev",
+          "ManagedBy": "CDK",
+          "Project": "HoukokusouChatbot"
+        },
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::373901294410:role/cdk-hnb659fds-deploy-role-373901294410-ap-northeast-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::373901294410:role/cdk-hnb659fds-cfn-exec-role-373901294410-ap-northeast-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-373901294410-ap-northeast-1/6425dc40636b253fe5f07a2b1e3c178254065f99a87ac2a231318718b38b699d.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "HoukokusouChatbotStack-dev.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::373901294410:role/cdk-hnb659fds-lookup-role-373901294410-ap-northeast-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "HoukokusouChatbotStack-dev.assets"
+      ],
+      "metadata": {
+        "/HoukokusouChatbotStack-dev": [
+          {
+            "type": "aws:cdk:stack-tags",
+            "data": [
+              {
+                "Key": "Environment",
+                "Value": "dev"
+              },
+              {
+                "Key": "ManagedBy",
+                "Value": "CDK"
+              },
+              {
+                "Key": "Project",
+                "Value": "HoukokusouChatbot"
+              }
+            ]
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "HoukokusouChatbotStack-dev"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  },
+  "minimumCliVersion": "2.1005.0"
+}
