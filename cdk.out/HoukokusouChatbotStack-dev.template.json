@@ -1,13 +1,1350 @@
 {
  "Description": "Houkokusou Chatbot Stack for dev environment",
  "Resources": {
+  "InputHandlerServiceRole4F3B6CFF": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "CDK"
+     },
+     {
+      "Key": "Project",
+      "Value": "HoukokusouChatbot"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/InputHandler/ServiceRole/Resource"
+   }
+  },
+  "InputHandlerServiceRoleDefaultPolicy99EDB865": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "states:StartExecution",
+       "Effect": "Allow",
+       "Resource": {
+        "Ref": "ChatProcessorStateMachine82440C14"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "InputHandlerServiceRoleDefaultPolicy99EDB865",
+    "Roles": [
+     {
+      "Ref": "InputHandlerServiceRole4F3B6CFF"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/InputHandler/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "InputHandler660DF614": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-373901294410-ap-northeast-1",
+     "S3Key": "d7b95ce6116ad54717bc72f232ae1c4b01a9ebbe83377d4685a55651c4990e80.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "ENVIRONMENT": "dev",
+      "STATE_MACHINE_ARN": {
+       "Ref": "ChatProcessorStateMachine82440C14"
+      }
+     }
+    },
+    "FunctionName": "houkokusou-chatbot-dev-input-handler",
+    "Handler": "lambda_function.lambda_handler",
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "InputHandlerServiceRole4F3B6CFF",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.11",
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "CDK"
+     },
+     {
+      "Key": "Project",
+      "Value": "HoukokusouChatbot"
+     }
+    ],
+    "Timeout": 30
+   },
+   "DependsOn": [
+    "InputHandlerServiceRoleDefaultPolicy99EDB865",
+    "InputHandlerServiceRole4F3B6CFF"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/InputHandler/Resource",
+    "aws:asset:path": "asset.d7b95ce6116ad54717bc72f232ae1c4b01a9ebbe83377d4685a55651c4990e80",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "StatusHandlerServiceRole83849002": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "CDK"
+     },
+     {
+      "Key": "Project",
+      "Value": "HoukokusouChatbot"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/StatusHandler/ServiceRole/Resource"
+   }
+  },
+  "StatusHandlerServiceRoleDefaultPolicyA8ED53FA": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "states:DescribeExecution",
+        "states:GetExecutionHistory",
+        "sts:GetCallerIdentity"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "StatusHandlerServiceRoleDefaultPolicyA8ED53FA",
+    "Roles": [
+     {
+      "Ref": "StatusHandlerServiceRole83849002"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/StatusHandler/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "StatusHandler849210EB": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-373901294410-ap-northeast-1",
+     "S3Key": "269088dd5275bf300ca04c0367002cdc528efb184453bf9c6978fd906312de75.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "ENVIRONMENT": "dev",
+      "STATE_MACHINE_ARN": {
+       "Ref": "ChatProcessorStateMachine82440C14"
+      }
+     }
+    },
+    "FunctionName": "houkokusou-chatbot-dev-status-handler",
+    "Handler": "lambda_function.lambda_handler",
+    "MemorySize": 256,
+    "Role": {
+     "Fn::GetAtt": [
+      "StatusHandlerServiceRole83849002",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.11",
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "CDK"
+     },
+     {
+      "Key": "Project",
+      "Value": "HoukokusouChatbot"
+     }
+    ],
+    "Timeout": 30
+   },
+   "DependsOn": [
+    "StatusHandlerServiceRoleDefaultPolicyA8ED53FA",
+    "StatusHandlerServiceRole83849002"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/StatusHandler/Resource",
+    "aws:asset:path": "asset.269088dd5275bf300ca04c0367002cdc528efb184453bf9c6978fd906312de75",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "BedrockAnalyzerServiceRole6855B1F1": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "CDK"
+     },
+     {
+      "Key": "Project",
+      "Value": "HoukokusouChatbot"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/BedrockAnalyzer/ServiceRole/Resource"
+   }
+  },
+  "BedrockAnalyzerServiceRoleDefaultPolicy6F6A39B9": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "BedrockAnalyzerServiceRoleDefaultPolicy6F6A39B9",
+    "Roles": [
+     {
+      "Ref": "BedrockAnalyzerServiceRole6855B1F1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/BedrockAnalyzer/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "BedrockAnalyzer657A7E50": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-373901294410-ap-northeast-1",
+     "S3Key": "04179e94ce9434c0070cb0e76e02b5729e21f6599eadf95698eaec1e1e0e5320.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "ENVIRONMENT": "dev"
+     }
+    },
+    "FunctionName": "houkokusou-chatbot-dev-bedrock-analyzer",
+    "Handler": "lambda_function.lambda_handler",
+    "MemorySize": 512,
+    "Role": {
+     "Fn::GetAtt": [
+      "BedrockAnalyzerServiceRole6855B1F1",
+      "Arn"
+     ]
+    },
+    "Runtime": "python3.11",
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "CDK"
+     },
+     {
+      "Key": "Project",
+      "Value": "HoukokusouChatbot"
+     }
+    ],
+    "Timeout": 60
+   },
+   "DependsOn": [
+    "BedrockAnalyzerServiceRoleDefaultPolicy6F6A39B9",
+    "BedrockAnalyzerServiceRole6855B1F1"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/BedrockAnalyzer/Resource",
+    "aws:asset:path": "asset.04179e94ce9434c0070cb0e76e02b5729e21f6599eadf95698eaec1e1e0e5320",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "ChatProcessorStateMachineRoleF38165B3": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "states.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "CDK"
+     },
+     {
+      "Key": "Project",
+      "Value": "HoukokusouChatbot"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/ChatProcessorStateMachine/Role/Resource"
+   }
+  },
+  "ChatProcessorStateMachineRoleDefaultPolicy73F9C9C1": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "lambda:InvokeFunction",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "BedrockAnalyzer657A7E50",
+          "Arn"
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::GetAtt": [
+             "BedrockAnalyzer657A7E50",
+             "Arn"
+            ]
+           },
+           ":*"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ChatProcessorStateMachineRoleDefaultPolicy73F9C9C1",
+    "Roles": [
+     {
+      "Ref": "ChatProcessorStateMachineRoleF38165B3"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/ChatProcessorStateMachine/Role/DefaultPolicy/Resource"
+   }
+  },
+  "ChatProcessorStateMachine82440C14": {
+   "Type": "AWS::StepFunctions::StateMachine",
+   "Properties": {
+    "DefinitionString": {
+     "Fn::Join": [
+      "",
+      [
+       "{\"StartAt\":\"AnalyzeWithBedrock\",\"States\":{\"AnalyzeWithBedrock\":{\"End\":true,\"Retry\":[{\"ErrorEquals\":[\"Lambda.ClientExecutionTimeoutException\",\"Lambda.ServiceException\",\"Lambda.AWSLambdaException\",\"Lambda.SdkClientException\"],\"IntervalSeconds\":2,\"MaxAttempts\":6,\"BackoffRate\":2}],\"Type\":\"Task\",\"OutputPath\":\"$.Payload\",\"Resource\":\"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":states:::lambda:invoke\",\"Parameters\":{\"FunctionName\":\"",
+       {
+        "Fn::GetAtt": [
+         "BedrockAnalyzer657A7E50",
+         "Arn"
+        ]
+       },
+       "\",\"Payload.$\":\"$\"}}}}"
+      ]
+     ]
+    },
+    "RoleArn": {
+     "Fn::GetAtt": [
+      "ChatProcessorStateMachineRoleF38165B3",
+      "Arn"
+     ]
+    },
+    "StateMachineName": "houkokusou-chatbot-dev-processor",
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "CDK"
+     },
+     {
+      "Key": "Project",
+      "Value": "HoukokusouChatbot"
+     }
+    ]
+   },
+   "DependsOn": [
+    "ChatProcessorStateMachineRoleDefaultPolicy73F9C9C1",
+    "ChatProcessorStateMachineRoleF38165B3"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/ChatProcessorStateMachine/Resource"
+   }
+  },
+  "ApiF70053CD": {
+   "Type": "AWS::ApiGateway::RestApi",
+   "Properties": {
+    "Description": "報連相チャットボット API",
+    "Name": "houkokusou-chatbot-dev",
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "CDK"
+     },
+     {
+      "Key": "Project",
+      "Value": "HoukokusouChatbot"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Resource"
+   }
+  },
+  "ApiDeploymentB17BE62D793deade89be952ae1d9705d1d7dba9d": {
+   "Type": "AWS::ApiGateway::Deployment",
+   "Properties": {
+    "Description": "報連相チャットボット API",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "DependsOn": [
+    "ApiapiOPTIONSC6F70CE1",
+    "Apiapi0E601135",
+    "Apiapiv1chatconversationIdOPTIONSBEC058C0",
+    "Apiapiv1chatconversationId62ABFB82",
+    "Apiapiv1chatconversationIdstatusGETBB65D7BB",
+    "Apiapiv1chatconversationIdstatusOPTIONSEA83CAA7",
+    "Apiapiv1chatconversationIdstatusD3C359FC",
+    "Apiapiv1chatOPTIONS2F027308",
+    "Apiapiv1chatPOST1E79A620",
+    "Apiapiv1chat20CD22D8",
+    "Apiapiv1healthGET9DF67081",
+    "Apiapiv1healthOPTIONS64040031",
+    "Apiapiv1health81764534",
+    "Apiapiv1OPTIONS85F99B3B",
+    "Apiapiv1227081EA",
+    "ApiOPTIONS5886EA5D"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Deployment/Resource"
+   }
+  },
+  "ApiDeploymentStageprod3EB9684E": {
+   "Type": "AWS::ApiGateway::Stage",
+   "Properties": {
+    "DeploymentId": {
+     "Ref": "ApiDeploymentB17BE62D793deade89be952ae1d9705d1d7dba9d"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    },
+    "StageName": "prod",
+    "Tags": [
+     {
+      "Key": "Environment",
+      "Value": "dev"
+     },
+     {
+      "Key": "ManagedBy",
+      "Value": "CDK"
+     },
+     {
+      "Key": "Project",
+      "Value": "HoukokusouChatbot"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/DeploymentStage.prod/Resource"
+   }
+  },
+  "ApiOPTIONS5886EA5D": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'GET,POST,OPTIONS'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "RootResourceId"
+     ]
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/OPTIONS/Resource"
+   }
+  },
+  "Apiapi0E601135": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "ApiF70053CD",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "api",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/Resource"
+   }
+  },
+  "ApiapiOPTIONSC6F70CE1": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'GET,POST,OPTIONS'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "Apiapi0E601135"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/OPTIONS/Resource"
+   }
+  },
+  "Apiapiv1227081EA": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "Apiapi0E601135"
+    },
+    "PathPart": "v1",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/v1/Resource"
+   }
+  },
+  "Apiapiv1OPTIONS85F99B3B": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'GET,POST,OPTIONS'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "Apiapiv1227081EA"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/v1/OPTIONS/Resource"
+   }
+  },
+  "Apiapiv1chat20CD22D8": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "Apiapiv1227081EA"
+    },
+    "PathPart": "chat",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/Resource"
+   }
+  },
+  "Apiapiv1chatOPTIONS2F027308": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'GET,POST,OPTIONS'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "Apiapiv1chat20CD22D8"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/OPTIONS/Resource"
+   }
+  },
+  "Apiapiv1chatPOSTApiPermissionHoukokusouChatbotStackdevApi9EDD9B27POSTapiv1chatB085BACC": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "InputHandler660DF614",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:aws:execute-api:ap-northeast-1:373901294410:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/",
+       {
+        "Ref": "ApiDeploymentStageprod3EB9684E"
+       },
+       "/POST/api/v1/chat"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/POST/ApiPermission.HoukokusouChatbotStackdevApi9EDD9B27.POST..api.v1.chat"
+   }
+  },
+  "Apiapiv1chatPOSTApiPermissionTestHoukokusouChatbotStackdevApi9EDD9B27POSTapiv1chat69DE6BA3": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "InputHandler660DF614",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:aws:execute-api:ap-northeast-1:373901294410:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/test-invoke-stage/POST/api/v1/chat"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/POST/ApiPermission.Test.HoukokusouChatbotStackdevApi9EDD9B27.POST..api.v1.chat"
+   }
+  },
+  "Apiapiv1chatPOST1E79A620": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "InputHandler660DF614",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Origin": true
+      },
+      "StatusCode": "200"
+     },
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Origin": true
+      },
+      "StatusCode": "202"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "Apiapiv1chat20CD22D8"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/POST/Resource"
+   }
+  },
+  "Apiapiv1chatconversationId62ABFB82": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "Apiapiv1chat20CD22D8"
+    },
+    "PathPart": "{conversationId}",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/{conversationId}/Resource"
+   }
+  },
+  "Apiapiv1chatconversationIdOPTIONSBEC058C0": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'GET,POST,OPTIONS'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "Apiapiv1chatconversationId62ABFB82"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/{conversationId}/OPTIONS/Resource"
+   }
+  },
+  "Apiapiv1chatconversationIdstatusD3C359FC": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "Apiapiv1chatconversationId62ABFB82"
+    },
+    "PathPart": "status",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/{conversationId}/status/Resource"
+   }
+  },
+  "Apiapiv1chatconversationIdstatusOPTIONSEA83CAA7": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'GET,POST,OPTIONS'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "Apiapiv1chatconversationIdstatusD3C359FC"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/{conversationId}/status/OPTIONS/Resource"
+   }
+  },
+  "Apiapiv1chatconversationIdstatusGETApiPermissionHoukokusouChatbotStackdevApi9EDD9B27GETapiv1chatconversationIdstatusD265D960": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "StatusHandler849210EB",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:aws:execute-api:ap-northeast-1:373901294410:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/",
+       {
+        "Ref": "ApiDeploymentStageprod3EB9684E"
+       },
+       "/GET/api/v1/chat/*/status"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/{conversationId}/status/GET/ApiPermission.HoukokusouChatbotStackdevApi9EDD9B27.GET..api.v1.chat.{conversationId}.status"
+   }
+  },
+  "Apiapiv1chatconversationIdstatusGETApiPermissionTestHoukokusouChatbotStackdevApi9EDD9B27GETapiv1chatconversationIdstatus72E86FB1": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "StatusHandler849210EB",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:aws:execute-api:ap-northeast-1:373901294410:",
+       {
+        "Ref": "ApiF70053CD"
+       },
+       "/test-invoke-stage/GET/api/v1/chat/*/status"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/{conversationId}/status/GET/ApiPermission.Test.HoukokusouChatbotStackdevApi9EDD9B27.GET..api.v1.chat.{conversationId}.status"
+   }
+  },
+  "Apiapiv1chatconversationIdstatusGETBB65D7BB": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "GET",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:aws:apigateway:ap-northeast-1:lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "StatusHandler849210EB",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Origin": true
+      },
+      "StatusCode": "200"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "Apiapiv1chatconversationIdstatusD3C359FC"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/{conversationId}/status/GET/Resource"
+   }
+  },
+  "Apiapiv1health81764534": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Ref": "Apiapiv1227081EA"
+    },
+    "PathPart": "health",
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/v1/health/Resource"
+   }
+  },
+  "Apiapiv1healthOPTIONS64040031": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'GET,POST,OPTIONS'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "Apiapiv1health81764534"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/v1/health/OPTIONS/Resource"
+   }
+  },
+  "Apiapiv1healthGET9DF67081": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "GET",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseTemplates": {
+        "application/json": "{\"status\": \"healthy\"}"
+       },
+       "StatusCode": "200"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{\"statusCode\": 200}"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "StatusCode": "200"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "Apiapiv1health81764534"
+    },
+    "RestApiId": {
+     "Ref": "ApiF70053CD"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "HoukokusouChatbotStack-dev/Api/Default/api/v1/health/GET/Resource"
+   }
+  },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/zPSM7S00DNQTCwv1k1OydbNyUzSCy5JTM7WCagsycjP0zfWMzTWM1bMKs7M1C0qzSvJzE3VC4LQACJsuUY8AAAA"
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/11P0W6DMAz8lr6HbB0v22O7qdKkVUP0A5AbXPCABGFnCKH8+0RGNbSnO/tO5/OT3r8868cdjJyYsklauur5ImAaBSMXcwvdtQQ9n7w1Qs6q15vd8gyHjpjJ2aAIOj3nrsVFiJi5lswUfZEFxWkBzCisDwsoTvXRmwblCIyKBfvbms6FADesP2KDd/vtmn+GWFTwDKYmG49u56CgpwoER5j0nCPLoafYbKVv2Ldu6tDKst1MF4HqHlehypGdHwzGhmeU2pWLuLK7uiZHHsLfOr65BJGtFs+nl95LUNkktbMPqd6nOt19MVEyeCvUoc5/8QcDUaj8mwEAAA=="
    },
    "Metadata": {
     "aws:cdk:path": "HoukokusouChatbotStack-dev/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "ApiEndpoint4F160690": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "ApiF70053CD"
+      },
+      ".execute-api.ap-northeast-1.",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "ApiDeploymentStageprod3EB9684E"
+      },
+      "/"
+     ]
+    ]
+   }
+  },
+  "ApiUrl": {
+   "Description": "API Gateway URL",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "ApiF70053CD"
+      },
+      ".execute-api.ap-northeast-1.",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "ApiDeploymentStageprod3EB9684E"
+      },
+      "/"
+     ]
+    ]
+   }
+  },
+  "ApiEndpoint": {
+   "Description": "Chat API Endpoint",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "ApiF70053CD"
+      },
+      ".execute-api.ap-northeast-1.",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "ApiDeploymentStageprod3EB9684E"
+      },
+      "/api/v1/chat"
+     ]
+    ]
+   }
+  },
+  "StatusEndpoint": {
+   "Description": "Status Check API Endpoint",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "ApiF70053CD"
+      },
+      ".execute-api.ap-northeast-1.",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "ApiDeploymentStageprod3EB9684E"
+      },
+      "/api/v1/chat/{conversationId}/status"
+     ]
+    ]
+   }
+  },
+  "StateMachineArn": {
+   "Description": "Step Functions State Machine ARN",
+   "Value": {
+    "Ref": "ChatProcessorStateMachine82440C14"
    }
   }
  },

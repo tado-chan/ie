@@ -1,0 +1,15 @@
+{
+    "Comment": "Chat Processor with Bedrock",
+    "StartAt": "InvokeBedrock",
+    "States": {
+        "InvokeBedrock": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+                "FunctionName": "houkokusou-chatbot-dev-BedrockAnalyzer",
+                "Payload.$": "$"
+            },
+            "End": true
+        }
+    }
+}

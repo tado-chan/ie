@@ -1,0 +1,141 @@
+
+C:\Users\aluta\Desktop\houkokusou-chatbot
+├── app.py
+├── cdk.json
+├── cdk.out
+|  ├── asset.04179e94ce9434c0070cb0e76e02b5729e21f6599eadf95698eaec1e1e0e5320
+|  |  ├── lambda_function.py
+|  |  ├── prompts
+|  |  └── requirements.txt
+|  ├── asset.0f52db030be22fdcb1aed8833640da86b79129be11690c07d89b74097ab69ebe
+|  |  ├── python
+|  |  └── requirements.txt
+|  ├── asset.273bc0bc27231442c2efa8d7d30418d138a4839e3d659cf6f163aa3f36260680
+|  |  ├── connect.py
+|  |  ├── disconnect.py
+|  |  ├── message.py
+|  |  └── requirements.txt
+|  ├── asset.4e2fcf915a3a5426c23ede4bfb3653f18842347ddc2d066ec34a52e38cda6858
+|  |  ├── lambda_function.py
+|  |  └── requirements.txt
+|  ├── asset.659e90031c8b2afeb747b52f9ba3d7f2f5c995828f8adb77713b527c27a8fb61
+|  |  ├── lambda_function.py
+|  |  ├── prompts
+|  |  └── requirements.txt
+|  ├── asset.6b9b6cb33ad4de716abecad605231f0e46d5e63870e7f7653ea0eb463d062d93
+|  |  ├── lambda_function.py
+|  |  └── requirements.txt
+|  ├── asset.7d35084a81b4337956a2899dd6c61f0a146211526c2efd772ab0d10bd6e79ef1
+|  |  ├── lambda_function.py
+|  |  └── requirements.txt
+|  ├── asset.d13d136964c19564f5fccc5aa54a8721a8d7675906cd7e345f3b1db8de7a898c
+|  |  ├── lambda_function.py
+|  |  └── requirements.txt
+|  ├── cdk.out
+|  ├── HoukokusouChatbotStack-dev.assets.json
+|  ├── HoukokusouChatbotStack-dev.template.json
+|  ├── manifest.json
+|  └── tree.json
+├── data
+|  ├── bedrock_prompts.json
+|  ├── organization_structure.json
+|  └── sample_conversations.json
+├── docs
+|  ├── api
+|  |  ├── rest-api.md
+|  |  └── websocket-api.md
+|  ├── architecture
+|  |  ├── data-flow.md
+|  |  ├── overview.md
+|  |  └── security.md
+|  ├── deployment
+|  |  └── deployment-guide.md
+|  └── development
+|     ├── coding-standards.md
+|     └── setup.md
+├── infrastructure
+|  ├── config
+|  |  ├── base.py
+|  |  ├── dev.py
+|  |  ├── prod.py
+|  |  ├── staging.py
+|  |  ├── __init__.py
+|  |  └── __pycache__
+|  ├── constructs
+|  |  ├── api_gateway_construct.py
+|  |  ├── cognito_construct.py
+|  |  ├── dynamodb_construct.py
+|  |  ├── lambda_construct.py
+|  |  ├── monitoring_construct.py
+|  |  ├── step_functions_construct.py
+|  |  ├── websocket_construct.py
+|  |  ├── __init__.py
+|  |  └── __pycache__
+|  ├── main_stack.py
+|  ├── step_functions
+|  |  └── chatbot_state_machine.json
+|  ├── __init__.py
+|  └── __pycache__
+|     ├── main_stack.cpython-313.pyc
+|     └── __init__.cpython-313.pyc
+├── Makefile
+├── monitoring
+|  ├── alarms
+|  |  └── alarm-definitions.json
+|  ├── dashboards
+|  |  └── cloudwatch-dashboard.json
+|  └── queries
+|     └── log-insights-queries.sql
+├── README.md
+├── requirements-dev.txt
+├── requirements.txt
+├── scripts
+|  ├── deploy
+|  |  ├── deploy.sh
+|  |  └── rollback.sh
+|  ├── setup
+|  |  ├── init-dev.sh
+|  |  └── seed-data.py
+|  └── utils
+|     ├── build-lambda-layers.sh
+|     └── sync-frontend.sh
+├── setup-structure.sh
+├── src
+|  ├── frontend
+|  |  ├── angular.json
+|  |  ├── capacitor.config.ts
+|  |  ├── ionic.config.json
+|  |  ├── karma.conf.js
+|  |  ├── node_modules
+|  |  ├── package-lock.json
+|  |  ├── package.json
+|  |  ├── src
+|  |  ├── tsconfig.app.json
+|  |  ├── tsconfig.json
+|  |  └── tsconfig.spec.json
+|  └── lambda
+|     ├── admin
+|     ├── api
+|     ├── layers
+|     └── processors
+├── state_machines
+|  ├── builder.py
+|  ├── definitions
+|  |  ├── chat_processor.json
+|  |  └── error_handler.json
+|  └── __init__.py
+├── structure.txt
+└── tests
+   ├── e2e
+   |  └── scenarios
+   ├── integration
+   |  └── api
+   └── unit
+      ├── infrastructure
+      └── lambda
+
+directory: 52 file: 81
+
+
+
+[2K[1G

@@ -64,7 +64,19 @@ class LambdaConstruct(Construct):
             "Input Handler Lambda",
             {
                 **common_env,
-                "CONVERSATIONS_TABLE": self.tables["conversations"].table_name,
+                "CONVERSATION_TABLE_NAME": self.tables["conversations"].table_name,
+                "STATE_MACHINE_ARN": "",  # 後でStep Functionsから設定
+            }
+        )
+
+        # ★ 新規追加: Status Handler Lambda
+        self.status_handler_function = self._create_function(
+            "StatusHandler",
+            "src/lambda/api/status_handler",
+            "Status Handler Lambda - Step Functions結果取得",
+            {
+                **common_env,
+                "CONVERSATION_TABLE_NAME": self.tables["conversations"].table_name,
                 "STATE_MACHINE_ARN": "",  # 後でStep Functionsから設定
             }
         )
@@ -176,9 +188,27 @@ class LambdaConstruct(Construct):
             }
         )
 
+        # ★ Step Functions読み取り権限を追加
+        step_functions_policy = iam.PolicyStatement(
+            actions=[
+                "states:DescribeExecution",
+                "states:GetExecutionHistory",
+            ],
+            resources=["*"],  # 具体的なARNは後で設定
+        )
+        
+        self.status_handler_function.add_to_role_policy(step_functions_policy)
+        self.input_handler_function.add_to_role_policy(
+            iam.PolicyStatement(
+                actions=["states:StartExecution"],
+                resources=["*"],
+            )
+        )
+
         # DynamoDBアクセス権限を付与
         for table in self.tables.values():
             table.grant_read_write_data(self.input_handler_function)
+            table.grant_read_write_data(self.status_handler_function)  # ★ 追加
             table.grant_read_write_data(self.bedrock_analyzer_function)
             table.grant_read_write_data(self.organization_matcher_function)
             table.grant_read_write_data(self.notification_sender_function)
@@ -218,3 +248,4 @@ class LambdaConstruct(Construct):
     def update_step_functions_arn(self, state_machine_arn: str):
         """Step FunctionsのARNを環境変数に設定"""
         self.input_handler_function.add_environment("STATE_MACHINE_ARN", state_machine_arn)
+        self.status_handler_function.add_environment("STATE_MACHINE_ARN", state_machine_arn)  # ★ 追加

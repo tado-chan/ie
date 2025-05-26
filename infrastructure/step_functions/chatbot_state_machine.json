@@ -1,0 +1,208 @@
+{
+    "Comment": "Chat Processor with Bedrock and DynamoDB updates",
+    "StartAt": "InitializeConversation",
+    "States": {
+        "InitializeConversation": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::dynamodb:updateItem",
+            "Parameters": {
+                "TableName": "${ConversationsTable}",
+                "Key": {
+                    "conversationId": {
+                        "S.$": "$.conversationId"
+                    }
+                },
+                "UpdateExpression": "SET #status = :status, #timestamp = :timestamp, #message = :message",
+                "ExpressionAttributeNames": {
+                    "#status": "status",
+                    "#timestamp": "timestamp",
+                    "#message": "message"
+                },
+                "ExpressionAttributeValues": {
+                    ":status": {
+                        "S": "processing"
+                    },
+                    ":timestamp": {
+                        "S.$": "$$.State.EnteredTime"
+                    },
+                    ":message": {
+                        "S.$": "$.message"
+                    }
+                }
+            },
+            "Next": "InvokeBedrock",
+            "Retry": [
+                {
+                    "ErrorEquals": [
+                        "States.TaskFailed"
+                    ],
+                    "IntervalSeconds": 2,
+                    "MaxAttempts": 3,
+                    "BackoffRate": 2
+                }
+            ],
+            "Catch": [
+                {
+                    "ErrorEquals": [
+                        "States.ALL"
+                    ],
+                    "Next": "HandleError",
+                    "ResultPath": "$.error"
+                }
+            ]
+        },
+        "InvokeBedrock": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+                "FunctionName": "${BedrockAnalyzerFunction}",
+                "Payload.$": "$"
+            },
+            "Next": "SaveResults",
+            "ResultPath": "$.bedrockResult",
+            "Retry": [
+                {
+                    "ErrorEquals": [
+                        "States.TaskFailed"
+                    ],
+                    "IntervalSeconds": 2,
+                    "MaxAttempts": 3,
+                    "BackoffRate": 2
+                }
+            ],
+            "Catch": [
+                {
+                    "ErrorEquals": [
+                        "States.ALL"
+                    ],
+                    "Next": "HandleError",
+                    "ResultPath": "$.error"
+                }
+            ]
+        },
+        "SaveResults": {
+            "Type": "Parallel",
+            "Branches": [
+                {
+                    "StartAt": "UpdateConversationStatus",
+                    "States": {
+                        "UpdateConversationStatus": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::dynamodb:updateItem",
+                            "Parameters": {
+                                "TableName": "${ConversationsTable}",
+                                "Key": {
+                                    "conversationId": {
+                                        "S.$": "$.conversationId"
+                                    }
+                                },
+                                "UpdateExpression": "SET #status = :status, #completedTime = :completedTime",
+                                "ExpressionAttributeNames": {
+                                    "#status": "status",
+                                    "#completedTime": "completedTime"
+                                },
+                                "ExpressionAttributeValues": {
+                                    ":status": {
+                                        "S": "completed"
+                                    },
+                                    ":completedTime": {
+                                        "S.$": "$$.State.EnteredTime"
+                                    }
+                                }
+                            },
+                            "End": true
+                        }
+                    }
+                },
+                {
+                    "StartAt": "SaveSuggestion",
+                    "States": {
+                        "SaveSuggestion": {
+                            "Type": "Task",
+                            "Resource": "arn:aws:states:::dynamodb:putItem",
+                            "Parameters": {
+                                "TableName": "${SuggestionsTable}",
+                                "Item": {
+                                    "conversationId": {
+                                        "S.$": "$.conversationId"
+                                    },
+                                    "suggestion": {
+                                        "M": {
+                                            "analysis": {
+                                                "S.$": "$.bedrockResult.Payload.analysis"
+                                            },
+                                            "category": {
+                                                "S.$": "$.bedrockResult.Payload.category"
+                                            },
+                                            "recommendedRecipient": {
+                                                "S.$": "$.bedrockResult.Payload.recommendedRecipient"
+                                            },
+                                            "timestamp": {
+                                                "S.$": "$.bedrockResult.Payload.timestamp"
+                                            }
+                                        }
+                                    },
+                                    "status": {
+                                        "S": "completed"
+                                    },
+                                    "createdAt": {
+                                        "S.$": "$$.State.EnteredTime"
+                                    }
+                                }
+                            },
+                            "End": true
+                        }
+                    }
+                }
+            ],
+            "Next": "Success",
+            "Catch": [
+                {
+                    "ErrorEquals": [
+                        "States.ALL"
+                    ],
+                    "Next": "HandleError",
+                    "ResultPath": "$.error"
+                }
+            ]
+        },
+        "Success": {
+            "Type": "Succeed",
+            "Comment": "Processing completed successfully"
+        },
+        "HandleError": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::dynamodb:updateItem",
+            "Parameters": {
+                "TableName": "${ConversationsTable}",
+                "Key": {
+                    "conversationId": {
+                        "S.$": "$.conversationId"
+                    }
+                },
+                "UpdateExpression": "SET #status = :status, #error = :error, #errorTime = :errorTime",
+                "ExpressionAttributeNames": {
+                    "#status": "status",
+                    "#error": "error",
+                    "#errorTime": "errorTime"
+                },
+                "ExpressionAttributeValues": {
+                    ":status": {
+                        "S": "error"
+                    },
+                    ":error": {
+                        "S.$": "$.error.Cause"
+                    },
+                    ":errorTime": {
+                        "S.$": "$$.State.EnteredTime"
+                    }
+                }
+            },
+            "Next": "Fail"
+        },
+        "Fail": {
+            "Type": "Fail",
+            "Comment": "Processing failed"
+        }
+    }
+}

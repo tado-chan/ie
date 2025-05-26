@@ -23,7 +23,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::373901294410:role/cdk-hnb659fds-deploy-role-373901294410-ap-northeast-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::373901294410:role/cdk-hnb659fds-cfn-exec-role-373901294410-ap-northeast-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-373901294410-ap-northeast-1/6425dc40636b253fe5f07a2b1e3c178254065f99a87ac2a231318718b38b699d.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-373901294410-ap-northeast-1/47e94011aeaf746612fb973d943d5e20ac36558595eb0a6e83538a5c0ac65db7.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -56,6 +56,246 @@
                 "Value": "HoukokusouChatbot"
               }
             ]
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/InputHandler/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InputHandlerServiceRole4F3B6CFF"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/InputHandler/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InputHandlerServiceRoleDefaultPolicy99EDB865"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/InputHandler/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "InputHandler660DF614"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/StatusHandler/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StatusHandlerServiceRole83849002"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/StatusHandler/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StatusHandlerServiceRoleDefaultPolicyA8ED53FA"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/StatusHandler/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StatusHandler849210EB"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/BedrockAnalyzer/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BedrockAnalyzerServiceRole6855B1F1"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/BedrockAnalyzer/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BedrockAnalyzerServiceRoleDefaultPolicy6F6A39B9"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/BedrockAnalyzer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BedrockAnalyzer657A7E50"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/ChatProcessorStateMachine/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ChatProcessorStateMachineRoleF38165B3"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/ChatProcessorStateMachine/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ChatProcessorStateMachineRoleDefaultPolicy73F9C9C1"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/ChatProcessorStateMachine/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ChatProcessorStateMachine82440C14"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiF70053CD"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Deployment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiDeploymentB17BE62D793deade89be952ae1d9705d1d7dba9d"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/DeploymentStage.prod/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiDeploymentStageprod3EB9684E"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Endpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiEndpoint4F160690"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiOPTIONS5886EA5D"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapi0E601135"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiapiOPTIONSC6F70CE1"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/v1/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapiv1227081EA"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/v1/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapiv1OPTIONS85F99B3B"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapiv1chat20CD22D8"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapiv1chatOPTIONS2F027308"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/POST/ApiPermission.HoukokusouChatbotStackdevApi9EDD9B27.POST..api.v1.chat": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapiv1chatPOSTApiPermissionHoukokusouChatbotStackdevApi9EDD9B27POSTapiv1chatB085BACC"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/POST/ApiPermission.Test.HoukokusouChatbotStackdevApi9EDD9B27.POST..api.v1.chat": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapiv1chatPOSTApiPermissionTestHoukokusouChatbotStackdevApi9EDD9B27POSTapiv1chat69DE6BA3"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/POST/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapiv1chatPOST1E79A620"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/{conversationId}/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapiv1chatconversationId62ABFB82"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/{conversationId}/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapiv1chatconversationIdOPTIONSBEC058C0"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/{conversationId}/status/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapiv1chatconversationIdstatusD3C359FC"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/{conversationId}/status/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapiv1chatconversationIdstatusOPTIONSEA83CAA7"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/{conversationId}/status/GET/ApiPermission.HoukokusouChatbotStackdevApi9EDD9B27.GET..api.v1.chat.{conversationId}.status": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapiv1chatconversationIdstatusGETApiPermissionHoukokusouChatbotStackdevApi9EDD9B27GETapiv1chatconversationIdstatusD265D960"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/{conversationId}/status/GET/ApiPermission.Test.HoukokusouChatbotStackdevApi9EDD9B27.GET..api.v1.chat.{conversationId}.status": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapiv1chatconversationIdstatusGETApiPermissionTestHoukokusouChatbotStackdevApi9EDD9B27GETapiv1chatconversationIdstatus72E86FB1"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/v1/chat/{conversationId}/status/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapiv1chatconversationIdstatusGETBB65D7BB"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/v1/health/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapiv1health81764534"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/v1/health/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapiv1healthOPTIONS64040031"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/Api/Default/api/v1/health/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Apiapiv1healthGET9DF67081"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/ApiUrl": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiUrl"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/ApiEndpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ApiEndpoint"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/StatusEndpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StatusEndpoint"
+          }
+        ],
+        "/HoukokusouChatbotStack-dev/StateMachineArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StateMachineArn"
           }
         ],
         "/HoukokusouChatbotStack-dev/CDKMetadata/Default": [

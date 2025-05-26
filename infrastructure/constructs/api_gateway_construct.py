@@ -19,6 +19,7 @@ class ApiGatewayConstruct(Construct):
         env_name: str,
         user_pool: cognito.UserPool,
         input_handler_function: lambda_.Function,
+        status_handler_function: lambda_.Function,  # ★ 追加
         config: dict = None,
         **kwargs
     ) -> None:
@@ -28,6 +29,7 @@ class ApiGatewayConstruct(Construct):
         self.config = config or {}
         self.user_pool = user_pool
         self.input_handler_function = input_handler_function
+        self.status_handler_function = status_handler_function  # ★ 追加
 
         # REST API作成
         self.rest_api = self._create_rest_api()
@@ -137,6 +139,18 @@ class ApiGatewayConstruct(Construct):
             "GET",
             apigateway.LambdaIntegration(
                 self.input_handler_function,
+                proxy=True,
+            ),
+            authorizer=self.authorizer,
+            authorization_type=apigateway.AuthorizationType.COGNITO,
+        )
+
+        # ★ 追加: /api/v1/chat/{conversationId}/status - ステータス取得
+        status_resource = chat_conversation_resource.add_resource("status")
+        status_resource.add_method(
+            "GET",
+            apigateway.LambdaIntegration(
+                self.status_handler_function,  # ★ 新しいLambda関数
                 proxy=True,
             ),
             authorizer=self.authorizer,
