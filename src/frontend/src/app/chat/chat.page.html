@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>報連相チャットボット</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="chat-content">
+  <div class="messages-container">
+    <div *ngFor="let message of messages" class="message-wrapper"
+      [ngClass]="{'user-message': message.role === 'user', 'assistant-message': message.role === 'assistant'}">
+
+      <div class="message-bubble">
+        <div class="message-content">{{ message.content }}</div>
+        <div class="message-time">
+          {{ message.timestamp | date:'HH:mm' }}
+          <span *ngIf="message.status === 'sending'" class="status-icon">
+            <ion-spinner name="dots" color="medium"></ion-spinner>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="typing-indicator">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="input-container">
+      <ion-textarea [(ngModel)]="newMessage" placeholder="メッセージを入力..." rows="1" autoGrow="true" maxlength="500"
+        (keypress)="handleKeyPress($event)"></ion-textarea>
+      <ion-button (click)="sendMessage()" [disabled]="!newMessage.trim() || isLoading" fill="clear" size="large">
+        <ion-icon name="send"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>
